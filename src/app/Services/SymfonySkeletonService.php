@@ -38,4 +38,30 @@ class SymfonySkeletonService
             return false;
         }
     }
+
+    public static function getAuthor(string $id)
+    {
+        try {
+            $response = Http::withOptions(['verify' => false])
+                ->withToken(Session::get('token'))
+                ->get(self::API_URL . '/authors/' . $id);
+
+            return $response->json();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public static function deleteAuthor(string $id)
+    {
+        try {
+            Http::withOptions(['verify' => false])
+                ->withToken(Session::get('token'))
+                ->delete(self::API_URL . '/authors/' . $id);
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 }

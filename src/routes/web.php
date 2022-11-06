@@ -21,3 +21,4 @@ Route::get('/', function () {
 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/authors', [AuthorController::class, 'index'])->name('authors');
+Route::get('/authors/{id}/delete', [AuthorController::class, 'destroy'])->name('authors.delete');

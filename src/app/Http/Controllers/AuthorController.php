@@ -4,20 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use App\Services\SymfonySkeletonService;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class AuthorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Application|Factory|View
-     */
-    public function index()
+    public function index(): View
     {
         return view('pages.authors', ['response' => SymfonySkeletonService::getAuthors()]);
     }
@@ -77,14 +71,18 @@ class AuthorController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Author $author
-     * @return Response
-     */
-    public function destroy(Author $author)
+    public function destroy(string $id): RedirectResponse
     {
-        //
+        $author = SymfonySkeletonService::getAuthor($id);
+
+        if (isset($author['books']) && count($author['books']) > 0) {
+            return back()->withErrors(['hasBooks' => true]);
+        } else {
+            if (SymfonySkeletonService::deleteAuthor($id)) {
+                return redirect('/authors');
+            } else {
+                return back()->withErrors(['error' => true]);
+            }
+        }
     }
 }
