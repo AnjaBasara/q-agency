@@ -15,7 +15,7 @@
             <tbody>
             @foreach($response['items'] as $author)
                 <tr>
-                    <td>{{ $author['id'] }}</td>
+                    <td><a href="{{ route('authors.show', ['id' => $author['id']]) }}">{{ $author['id'] }}</a></td>
                     <td>{{ $author['first_name'] }}</td>
                     <td>{{ $author['last_name'] }}</td>
                     <td>{{ date('d.m.Y.', strtotime($author['birthday'])) }}</td>

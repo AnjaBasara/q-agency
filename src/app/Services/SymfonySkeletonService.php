@@ -52,12 +52,25 @@ class SymfonySkeletonService
         }
     }
 
-    public static function deleteAuthor(string $id)
+    public static function deleteAuthor(string $id): bool
     {
         try {
             Http::withOptions(['verify' => false])
                 ->withToken(Session::get('token'))
                 ->delete(self::API_URL . '/authors/' . $id);
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public static function deleteBook(string $id): bool
+    {
+        try {
+            Http::withOptions(['verify' => false])
+                ->withToken(Session::get('token'))
+                ->delete(self::API_URL . '/books/' . $id);
 
             return true;
         } catch (Exception $e) {

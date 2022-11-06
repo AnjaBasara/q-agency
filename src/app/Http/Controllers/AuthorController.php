@@ -37,15 +37,9 @@ class AuthorController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Author $author
-     * @return Response
-     */
-    public function show(Author $author)
+    public function show(string $id): View
     {
-
+        return view('pages.author', ['author' => SymfonySkeletonService::getAuthor($id)]);
     }
 
     /**
@@ -79,7 +73,7 @@ class AuthorController extends Controller
             return back()->withErrors(['hasBooks' => true]);
         } else {
             if (SymfonySkeletonService::deleteAuthor($id)) {
-                return redirect('/authors');
+                return back();
             } else {
                 return back()->withErrors(['error' => true]);
             }
