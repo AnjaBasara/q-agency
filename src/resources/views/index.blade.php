@@ -20,11 +20,7 @@
 <body>
 @include('components.header')
 <div class="h-100">
-    @auth
-        @include('pages.authors')
-    @else
-        @include('pages.login')
-    @endauth
+    @yield('content')
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"

@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Services\SymfonySkeletonService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    public function login(Request $request)
+    public function login(Request $request): RedirectResponse
     {
         $response = SymfonySkeletonService::authenticate($request->email, $request->password);
 
@@ -24,10 +25,5 @@ class LoginController extends Controller
         } else {
             return back()->withInput($request->only('email', 'remember'));
         }
-    }
-
-    public function show()
-    {
-        return view('pages.authors');
     }
 }

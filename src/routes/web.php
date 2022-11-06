@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('pages.login');
 });
 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::get('/authors', [LoginController::class, 'show'])->name('authors');
+Route::get('/authors', [AuthorController::class, 'index'])->name('authors');
