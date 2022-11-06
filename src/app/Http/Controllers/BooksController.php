@@ -13,7 +13,7 @@ class BooksController extends Controller
 {
     public function create(): View
     {
-        return view('pages.book', ['response' => SymfonySkeletonService::getAuthors()]);
+        return view('pages.book', ['response' => SymfonySkeletonService::getAuthors()->json()]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -35,7 +35,7 @@ class BooksController extends Controller
 
     public function destroy(string $id): RedirectResponse
     {
-        if (SymfonySkeletonService::deleteBook($id)) {
+        if (SymfonySkeletonService::deleteBook($id)->successful()) {
             return back();
         } else {
             return back()->withErrors(['error' => true]);

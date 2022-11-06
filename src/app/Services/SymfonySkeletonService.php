@@ -28,56 +28,32 @@ class SymfonySkeletonService
         }
     }
 
-    public static function getAuthors()
+    public static function getAuthors(): Response
     {
-        try {
-            $response = Http::withOptions(['verify' => false])
-                ->withToken(Session::get('token'))
-                ->get(self::API_URL . '/authors');
-
-            return $response->json();
-        } catch (Exception $e) {
-            return false;
-        }
+        return Http::withOptions(['verify' => false])
+            ->withToken(Session::get('token'))
+            ->get(self::API_URL . '/authors');
     }
 
-    public static function getAuthor(string $id)
+    public static function getAuthor(string $id): Response
     {
-        try {
-            $response = Http::withOptions(['verify' => false])
-                ->withToken(Session::get('token'))
-                ->get(self::API_URL . '/authors/' . $id);
-
-            return $response->json();
-        } catch (Exception $e) {
-            return false;
-        }
+        return Http::withOptions(['verify' => false])
+            ->withToken(Session::get('token'))
+            ->get(self::API_URL . '/authors/' . $id);
     }
 
-    public static function deleteAuthor(string $id): bool
+    public static function deleteAuthor(string $id): Response
     {
-        try {
-            Http::withOptions(['verify' => false])
-                ->withToken(Session::get('token'))
-                ->delete(self::API_URL . '/authors/' . $id);
-
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+        return Http::withOptions(['verify' => false])
+            ->withToken(Session::get('token'))
+            ->delete(self::API_URL . '/authors/' . $id);
     }
 
-    public static function deleteBook(string $id): bool
+    public static function deleteBook(string $id): Response
     {
-        try {
-            Http::withOptions(['verify' => false])
-                ->withToken(Session::get('token'))
-                ->delete(self::API_URL . '/books/' . $id);
-
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+        return Http::withOptions(['verify' => false])
+            ->withToken(Session::get('token'))
+            ->delete(self::API_URL . '/books/' . $id);
     }
 
     public static function createBook(Book $book): Response

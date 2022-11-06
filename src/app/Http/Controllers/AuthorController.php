@@ -13,7 +13,7 @@ class AuthorController extends Controller
 {
     public function index(): View
     {
-        return view('pages.authors', ['response' => SymfonySkeletonService::getAuthors()]);
+        return view('pages.authors', ['response' => SymfonySkeletonService::getAuthors()->json()]);
     }
 
     /**
@@ -67,16 +67,18 @@ class AuthorController extends Controller
 
     public function destroy(string $id): RedirectResponse
     {
-        $author = SymfonySkeletonService::getAuthor($id);
+        $response = SymfonySkeletonService::getAuthor($id);
 
-        if (isset($author['books']) && count($author['books']) > 0) {
-            return back()->withErrors(['hasBooks' => true]);
-        } else {
-            if (SymfonySkeletonService::deleteAuthor($id)) {
-                return back();
+        if ($response->successful()) {
+            if (isset($response->json()['books']) && count($response->json()['books']) > 0) {
+                return back()->withErrors(['hasBooks' => true]);
             } else {
-                return back()->withErrors(['error' => true]);
+                if (SymfonySkeletonService::deleteAuthor($id)->successful()) {
+                    return back();
+                }
             }
         }
+
+        return back()->withErrors(['error' => true]);
     }
 }
