@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Book;
-use Exception;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
@@ -12,20 +11,14 @@ class SymfonySkeletonService
 {
     private const API_URL = 'https://symfony-skeleton.q-tests.com/api/v2';
 
-    public static function authenticate($email, $password)
+    public static function authenticate($email, $password): Response
     {
-        try {
-            $response = Http::withOptions([
-                'verify' => false,
-            ])->post(self::API_URL . '/token', [
-                'email' => $email,
-                'password' => $password,
-            ]);
-
-            return $response->json();
-        } catch (Exception $e) {
-            return false;
-        }
+        return Http::withOptions([
+            'verify' => false,
+        ])->post(self::API_URL . '/token', [
+            'email' => $email,
+            'password' => $password,
+        ]);
     }
 
     public static function getAuthors(): Response

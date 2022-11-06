@@ -15,7 +15,7 @@ class LoginController extends Controller
     {
         $response = SymfonySkeletonService::authenticate($request->email, $request->password);
 
-        if (array_key_exists('token_key', $response)) {
+        if (array_key_exists('token_key', $response->json())) {
             $user = new User();
             $user->name = $response['user']['first_name'] . ' ' . $response['user']['last_name'];
             $user->email = $response['user']['email'];
@@ -23,7 +23,7 @@ class LoginController extends Controller
             Session::put('token', $response['token_key']);
             return redirect()->intended('/authors');
         } else {
-            return back()->withInput($request->only('email', 'remember'));
+            return back()->withErrors(['credentials' => true]);
         }
     }
 }
