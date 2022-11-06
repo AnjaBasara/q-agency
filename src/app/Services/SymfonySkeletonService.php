@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Book;
 use Exception;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
@@ -79,24 +80,18 @@ class SymfonySkeletonService
         }
     }
 
-    public static function createBook(Book $book)
+    public static function createBook(Book $book): Response
     {
-        try {
-            $response = Http::withOptions(['verify' => false])
-                ->withToken(Session::get('token'))
-                ->post(self::API_URL . '/books', [
-                    'author' => $book->author,
-                    'title' => $book->title,
-                    'release_date' => $book->releaseDate,
-                    'description' => $book->description,
-                    'isbn' => $book->isbn,
-                    'format' => $book->format,
-                    'number_of_pages' => $book->numberOfPages,
-                ]);
-
-            return $response->json();
-        } catch (Exception $e) {
-            return false;
-        }
+        return Http::withOptions(['verify' => false])
+            ->withToken(Session::get('token'))
+            ->post(self::API_URL . '/books', [
+                'author' => $book->author,
+                'title' => $book->title,
+                'release_date' => $book->releaseDate,
+                'description' => $book->description,
+                'isbn' => $book->isbn,
+                'format' => $book->format,
+                'number_of_pages' => $book->numberOfPages,
+            ]);
     }
 }

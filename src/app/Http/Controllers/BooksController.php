@@ -13,7 +13,7 @@ class BooksController extends Controller
 {
     public function create(): View
     {
-        return view('pages.book');
+        return view('pages.book', ['response' => SymfonySkeletonService::getAuthors()]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -26,7 +26,7 @@ class BooksController extends Controller
 
         $book->author = $author;
 
-        if (SymfonySkeletonService::createBook($book)) {
+        if (SymfonySkeletonService::createBook($book)->successful()) {
             return redirect('/authors');
         } else {
             return back()->withErrors(['error' => true]);

@@ -21,7 +21,13 @@
             <div class="form-group row">
                 <label for="author" class="col-md-4 col-form-label text-md-right">Author:</label>
                 <div class="col-md-6">
-                    <input id="author" type="number" name="author" class="form-control" required>
+                    <select id="author" name="author" class="custom-select" required>
+                        <option selected disabled hidden value="">Select author</option>
+                        @foreach($response['items'] as $author)
+                            <option
+                                value="{{ $author['id'] }}">{{ $author['first_name'] }} {{ $author['last_name'] }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
 
