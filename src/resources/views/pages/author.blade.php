@@ -13,6 +13,11 @@
                 <p class="card-text">{{ $author['biography'] }}</p>
             </div>
         </div>
+
+        @if($errors->has('error'))
+            <div class="alert alert-danger" role="alert">An error occurred while deleting a book!</div>
+        @endif
+
         @if($author['books'])
             <table class="table table-sm">
                 <thead>

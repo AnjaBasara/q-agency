@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Book;
 use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
@@ -73,6 +74,27 @@ class SymfonySkeletonService
                 ->delete(self::API_URL . '/books/' . $id);
 
             return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public static function createBook(Book $book)
+    {
+        try {
+            $response = Http::withOptions(['verify' => false])
+                ->withToken(Session::get('token'))
+                ->post(self::API_URL . '/books', [
+                    'author' => $book->author,
+                    'title' => $book->title,
+                    'release_date' => $book->releaseDate,
+                    'description' => $book->description,
+                    'isbn' => $book->isbn,
+                    'format' => $book->format,
+                    'number_of_pages' => $book->numberOfPages,
+                ]);
+
+            return $response->json();
         } catch (Exception $e) {
             return false;
         }

@@ -1,6 +1,11 @@
 @extends('index')
 @section('content')
     <div class="d-flex flex-column">
+
+        <div class="mb-5 d-flex justify-content-center">
+            <a role="button" class="btn btn-primary" href="{{ route('books.create') }}">Add a new Book</a>
+        </div>
+
         <table class="table table-sm">
             <thead>
             <tr>

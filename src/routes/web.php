@@ -28,5 +28,7 @@ Route::get('/authors/{id}/delete', [AuthorController::class, 'destroy'])->name('
 Route::get('/authors/{id}', [AuthorController::class, 'show'])->name('authors.show');
 
 // Books
+Route::get('/books/create', [BooksController::class, 'create'])->name('books.create');
+Route::post('/books', [BooksController::class, 'store'])->name('books.store');
 Route::get('/books/{id}/delete', [BooksController::class, 'destroy'])->name('books.delete');
 
