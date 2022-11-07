@@ -43,10 +43,10 @@ class SymfonySkeletonService
             ->delete(self::API_URL . '/authors/' . $id);
     }
 
-    public static function createAuthor(Author $author, string $token): Response
+    public static function createAuthor(Author $author): Response
     {
         return Http::withOptions(['verify' => false])
-            ->withToken($token)
+            ->withToken(Session::get('token'))
             ->post(self::API_URL . '/authors', [
                 'first_name' => $author->firstName,
                 'last_name' => $author->lastName,
