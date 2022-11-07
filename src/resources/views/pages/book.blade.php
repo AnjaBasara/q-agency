@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-    <div class="h-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="d-flex flex-column justify-content-center align-items-center">
 
         @if($errors->has('error'))
             <div class="alert alert-danger" role="alert">An error occurred while creating a new book!</div>

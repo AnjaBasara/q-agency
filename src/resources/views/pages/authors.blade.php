@@ -6,6 +6,14 @@
             <a role="button" class="btn btn-primary" href="{{ route('books.create') }}">Add a new Book</a>
         </div>
 
+        @if($errors->has('hasBooks'))
+            <div class="alert alert-danger" role="alert">Cannot delete author since they have published books!</div>
+        @endif
+
+        @if($errors->has('error'))
+            <div class="alert alert-danger" role="alert">An error occurred while deleting the author!</div>
+        @endif
+
         <table class="table table-sm">
             <thead>
             <tr>
@@ -34,13 +42,5 @@
 
             </tbody>
         </table>
-
-        @if($errors->has('hasBooks'))
-            <div class="alert alert-danger" role="alert">Cannot delete author since they have published books!</div>
-        @endif
-
-        @if($errors->has('error'))
-            <div class="alert alert-danger" role="alert">An error occurred while deleting the author!</div>
-        @endif
     </div>
 @endsection

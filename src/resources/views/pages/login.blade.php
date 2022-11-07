@@ -1,9 +1,9 @@
 @extends('index')
 @section('content')
-    <div class="h-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="mt-5 d-flex flex-column justify-content-center align-items-center">
 
         @error('credentials')
-        <div class="alert alert-danger" role="alert">Invalid username and/or password!</div>
+        <div class="alert alert-danger" role="alert">Invalid username or password!</div>
         @enderror
 
         <form method="POST" action="{{ route('login') }}" autocomplete="off">
