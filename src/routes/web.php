@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Authors
     Route::get('/authors', [AuthorController::class, 'index'])->name('authors');
+    Route::get('/authors/page/{page}', [AuthorController::class, 'index'])->name('authors.page');
     Route::get('/authors/{id}/delete', [AuthorController::class, 'destroy'])->name('authors.delete');
     Route::get('/authors/{id}', [AuthorController::class, 'show'])->name('authors.show');
 

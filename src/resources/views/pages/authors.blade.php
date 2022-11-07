@@ -42,5 +42,14 @@
 
             </tbody>
         </table>
+
+        <ul class="pagination d-flex justify-content-center">
+            <li class="page-item">
+                <a class="page-link" href="{{ route('authors.page', ['page' => $page - 1]) }}">Previous</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{ route('authors.page', ['page' => $page + 1]) }}">Next</a>
+            </li>
+        </ul>
     </div>
 @endsection

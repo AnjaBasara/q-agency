@@ -11,9 +11,18 @@ use Illuminate\Http\Response;
 
 class AuthorController extends Controller
 {
-    public function index(): View
+    public function index(string $page = null): View
     {
-        return view('pages.authors', ['response' => SymfonySkeletonService::getAuthors()->json()]);
+        if (ctype_digit($page)) {
+            $page = max($page, 1);
+        } else {
+            $page = 1;
+        }
+
+        return view('pages.authors', [
+            'page' => $page,
+            'response' => SymfonySkeletonService::getAuthors($page)->json(),
+        ]);
     }
 
     /**

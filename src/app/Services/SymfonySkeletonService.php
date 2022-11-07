@@ -21,11 +21,11 @@ class SymfonySkeletonService
         ]);
     }
 
-    public static function getAuthors(): Response
+    public static function getAuthors(int $page = 1): Response
     {
         return Http::withOptions(['verify' => false])
             ->withToken(Session::get('token'))
-            ->get(self::API_URL . '/authors');
+            ->get(self::API_URL . '/authors?page=' . $page);
     }
 
     public static function getAuthor(string $id): Response
