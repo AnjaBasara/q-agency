@@ -27,6 +27,7 @@
                             <option
                                 value="{{ $author['id'] }}">{{ $author['first_name'] }} {{ $author['last_name'] }}</option>
                         @endforeach
+                        <option value="" id="loadMore" style="color: blue">Load more</option>
                     </select>
                 </div>
             </div>
@@ -74,3 +75,54 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        let page = 1;
+
+        $('#loadMore').click(() => {
+            loadMoreAuthors(page = page + 1);
+        });
+
+        function loadMoreAuthors(page) {
+            const authorSelect = document.getElementById('author');
+
+            $.ajax({
+                type: 'GET',
+                url: '/authors/load/' + page,
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                processData: false,
+                contentType: false,
+                success:
+                    function (data) {
+                        // remove the Load more (in order to place it at the bottom of the new list)
+                        const loadMoreOption = authorSelect.removeChild(document.getElementById('loadMore'));
+
+                        // authors fetched from the API
+                        const authors = data['items'];
+
+                        for (let i = 0; i < authors.length; i++) {
+                            const author = authors[i];
+                            const el = document.createElement('option');
+                            el.textContent = author['first_name'] + ' ' + author['last_name'];
+                            el.value = author['id'];
+                            // add the fetched authors to the <select> dropdown
+                            authorSelect.appendChild(el);
+                        }
+
+                        if (page !== data['total_pages']) {
+                            // if there are more authors - append the Load more, otherwise don't
+                            authorSelect.appendChild(loadMoreOption);
+                        }
+
+                        // after Load more click - dropdown closes so "Select author" needs to be selected to be UI friendly
+                        authorSelect.options[0].selected = true;
+                    },
+                error:
+                    function (error) {
+                        console.log(error);
+                    },
+            });
+        }
+    </script>
+@endpush

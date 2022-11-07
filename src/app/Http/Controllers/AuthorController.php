@@ -25,6 +25,11 @@ class AuthorController extends Controller
         ]);
     }
 
+    public function load(int $page = 1)
+    {
+        return SymfonySkeletonService::getAuthors($page)->json();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
