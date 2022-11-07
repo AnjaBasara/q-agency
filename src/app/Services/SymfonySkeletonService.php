@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Author;
 use App\Models\Book;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
@@ -40,6 +41,20 @@ class SymfonySkeletonService
         return Http::withOptions(['verify' => false])
             ->withToken(Session::get('token'))
             ->delete(self::API_URL . '/authors/' . $id);
+    }
+
+    public static function createAuthor(Author $author, string $token): Response
+    {
+        return Http::withOptions(['verify' => false])
+            ->withToken($token)
+            ->post(self::API_URL . '/authors', [
+                'first_name' => $author->firstName,
+                'last_name' => $author->lastName,
+                'birthday' => $author->birthday,
+                'biography' => $author->biography,
+                'gender' => $author->gender,
+                'place_of_birth' => $author->placeOfBirth,
+            ]);
     }
 
     public static function deleteBook(string $id): Response
