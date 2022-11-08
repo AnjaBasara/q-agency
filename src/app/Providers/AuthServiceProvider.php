@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Services\SymfonySkeletonService;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Auth::provider('external', function ($app, array $config) {
-            return new ExternalApiUserProvider();
+            return new ExternalApiUserProvider(new SymfonySkeletonService());
         });
     }
 }

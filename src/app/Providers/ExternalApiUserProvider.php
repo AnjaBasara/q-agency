@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Session;
 
 class ExternalApiUserProvider implements UserProvider
 {
+    private SymfonySkeletonService $service;
+
+    public function __construct(SymfonySkeletonService $service)
+    {
+        $this->service = $service;
+    }
 
     /**
      * Retrieve a user by their unique identifier.
@@ -63,7 +69,7 @@ class ExternalApiUserProvider implements UserProvider
             return null;
         }
 
-        $response = SymfonySkeletonService::authenticate($credentials['email'], $credentials['password']);
+        $response = $this->service->authenticate($credentials['email'], $credentials['password']);
 
         if ($response->failed()) {
             return null;

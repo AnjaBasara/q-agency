@@ -12,7 +12,7 @@ class SymfonySkeletonService
 {
     private const API_URL = 'https://symfony-skeleton.q-tests.com/api/v2';
 
-    public static function authenticate($email, $password): Response
+    public function authenticate($email, $password): Response
     {
         return Http::withOptions([
             'verify' => false,
@@ -22,28 +22,28 @@ class SymfonySkeletonService
         ]);
     }
 
-    public static function getAuthors(int $page = 1): Response
+    public function getAuthors(int $page = 1): Response
     {
         return Http::withOptions(['verify' => false])
             ->withToken(Session::get('token'))
             ->get(self::API_URL . '/authors?page=' . $page);
     }
 
-    public static function getAuthor(string $id): Response
+    public function getAuthor(string $id): Response
     {
         return Http::withOptions(['verify' => false])
             ->withToken(Session::get('token'))
             ->get(self::API_URL . '/authors/' . $id);
     }
 
-    public static function deleteAuthor(string $id): Response
+    public function deleteAuthor(string $id): Response
     {
         return Http::withOptions(['verify' => false])
             ->withToken(Session::get('token'))
             ->delete(self::API_URL . '/authors/' . $id);
     }
 
-    public static function createAuthor(Author $author): Response
+    public function createAuthor(Author $author): Response
     {
         return Http::withOptions(['verify' => false])
             ->withToken(Session::get('token'))
@@ -57,14 +57,14 @@ class SymfonySkeletonService
             ]);
     }
 
-    public static function deleteBook(string $id): Response
+    public function deleteBook(string $id): Response
     {
         return Http::withOptions(['verify' => false])
             ->withToken(Session::get('token'))
             ->delete(self::API_URL . '/books/' . $id);
     }
 
-    public static function createBook(Book $book): Response
+    public function createBook(Book $book): Response
     {
         return Http::withOptions(['verify' => false])
             ->withToken(Session::get('token'))

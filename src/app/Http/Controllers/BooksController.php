@@ -11,9 +11,15 @@ use Illuminate\View\View;
 
 class BooksController extends Controller
 {
+    private SymfonySkeletonService $service;
+
+    public function __construct(SymfonySkeletonService $service)
+    {
+        $this->service = $service;
+    }
     public function create(): View
     {
-        return view('pages.book', ['response' => SymfonySkeletonService::getAuthors()->json()]);
+        return view('pages.book', ['response' => $this->service->getAuthors()->json()]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -26,7 +32,7 @@ class BooksController extends Controller
 
         $book->author = $author;
 
-        if (SymfonySkeletonService::createBook($book)->successful()) {
+        if ($this->service->createBook($book)->successful()) {
             return redirect('/authors');
         } else {
             return back()->withErrors(['error' => true]);
@@ -35,7 +41,7 @@ class BooksController extends Controller
 
     public function destroy(string $id): RedirectResponse
     {
-        if (SymfonySkeletonService::deleteBook($id)->successful()) {
+        if ($this->service->deleteBook($id)->successful()) {
             return back();
         } else {
             return back()->withErrors(['error' => true]);

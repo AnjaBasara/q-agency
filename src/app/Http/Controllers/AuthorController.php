@@ -5,10 +5,16 @@ namespace App\Http\Controllers;
 use App\Services\SymfonySkeletonService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthorController extends Controller
 {
+    private SymfonySkeletonService $service;
+
+    public function __construct(SymfonySkeletonService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index(string $page = null): View
     {
         if (ctype_digit($page)) {
@@ -19,13 +25,13 @@ class AuthorController extends Controller
 
         return view('pages.authors', [
             'page' => $page,
-            'response' => SymfonySkeletonService::getAuthors($page)->json(),
+            'response' => $this->service->getAuthors($page)->json(),
         ]);
     }
 
     public function load(int $page = 1): array
     {
-        return SymfonySkeletonService::getAuthors($page)->json();
+        return $this->service->getAuthors($page)->json();
     }
 
     public function show(string $id)
@@ -34,7 +40,7 @@ class AuthorController extends Controller
             return redirect('/authors');
         }
 
-        $response = SymfonySkeletonService::getAuthor($id);
+        $response = $this->service->getAuthor($id);
 
         if ($response->successful()) {
             return view('pages.author', ['author' => $response]);
@@ -45,13 +51,13 @@ class AuthorController extends Controller
 
     public function destroy(string $id): RedirectResponse
     {
-        $response = SymfonySkeletonService::getAuthor($id);
+        $response = $this->service->getAuthor($id);
 
         if ($response->successful()) {
             if (isset($response->json()['books']) && count($response->json()['books']) > 0) {
                 return back()->withErrors(['hasBooks' => true]);
             } else {
-                if (SymfonySkeletonService::deleteAuthor($id)->successful()) {
+                if ($this->service->deleteAuthor($id)->successful()) {
                     return back();
                 }
             }

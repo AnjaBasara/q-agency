@@ -13,6 +13,14 @@ class CreateAuthor extends Command
     const CREATE_AUTHOR_ERROR_MESSAGE = 'An error occurred while creating the author!';
     const LOGIN_ERROR_MESSAGE = 'Incorrect username or password!';
 
+    private SymfonySkeletonService $service;
+
+    public function __construct(SymfonySkeletonService $service)
+    {
+        parent::__construct();
+        $this->service = $service;
+    }
+
     /**
      * The name and signature of the console command.
      *
@@ -36,7 +44,7 @@ class CreateAuthor extends Command
     {
         $email = $this->ask('Enter email');
         $password = $this->secret('Enter password');
-        $response = SymfonySkeletonService::authenticate($email, $password);
+        $response = $this->service->authenticate($email, $password);
 
         if ($response->failed()) {
             $this->error(self::LOGIN_ERROR_MESSAGE);
@@ -54,7 +62,7 @@ class CreateAuthor extends Command
         $author->gender = $this->ask('Enter gender');
         $author->placeOfBirth = $this->ask('Enter place of birth');
 
-        if (SymfonySkeletonService::createAuthor($author)->successful()) {
+        if ($this->service->createAuthor($author)->successful()) {
             $this->info(sprintf(self::SUCCESS_MESSAGE, $author->firstName, $author->lastName));
             return Command::SUCCESS;
         } else {
