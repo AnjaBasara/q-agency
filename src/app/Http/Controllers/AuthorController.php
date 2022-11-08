@@ -28,9 +28,19 @@ class AuthorController extends Controller
         return SymfonySkeletonService::getAuthors($page)->json();
     }
 
-    public function show(string $id): View
+    public function show(string $id)
     {
-        return view('pages.author', ['author' => SymfonySkeletonService::getAuthor($id)]);
+        if (!ctype_digit($id)) {
+            return redirect('/authors');
+        }
+
+        $response = SymfonySkeletonService::getAuthor($id);
+
+        if ($response->successful()) {
+            return view('pages.author', ['author' => $response]);
+        } else {
+            return redirect('/authors');
+        }
     }
 
     public function destroy(string $id): RedirectResponse
