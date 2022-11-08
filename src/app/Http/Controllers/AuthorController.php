@@ -23,7 +23,7 @@ class AuthorController extends Controller
         ]);
     }
 
-    public function load(int $page = 1): JsonResponse
+    public function load(int $page = 1): array
     {
         return SymfonySkeletonService::getAuthors($page)->json();
     }
