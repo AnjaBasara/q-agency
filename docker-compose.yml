@@ -1,12 +1,12 @@
 version: '3.8'
 
 services:
-  php-apache:
-    container_name: php-apache
+  laravel:
     build:
-      context: ./php
-    ports:
-      - '8080:80'
+      context: .
+      dockerfile: Dockerfile
+    command: 'php artisan serve --host=0.0.0.0'
     volumes:
-      - ./src:/var/www/q-agency
-      - ./apache/default.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./src:/app
+    ports:
+      - '8000:8000'
