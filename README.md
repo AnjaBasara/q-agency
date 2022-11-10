@@ -8,7 +8,7 @@ To run this application, you should have [Docker](https://www.docker.com/) insta
 
 After cloning the repository, open the `q-agency` folder and run this command:
 
-`docker-compose up -d`
+`docker-compose up`
 
 After that, open the application in your browser by visiting http://localhost:8000/
 
@@ -16,11 +16,7 @@ After that, open the application in your browser by visiting http://localhost:80
 
 To run the CreateAuthor artisan command, execute the Docker container interactively by running the command:
 
-`docker exec -it <container_name> bash`
-
-where <container_name> is the name of the above created container.
-
-> To see the name of the container, use `docker container ls` command to list all the containers and their names.
+`docker exec -it laravel-app bash`
 
 and then call the command:
 
