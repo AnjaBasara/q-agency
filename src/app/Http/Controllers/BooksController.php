@@ -35,7 +35,7 @@ class BooksController extends Controller
         if ($this->service->createBook($book)->successful()) {
             return redirect('/authors');
         } else {
-            return back()->withErrors(['error' => true]);
+            return back()->withErrors(['error' => true])->withInput($request->input());
         }
     }
 

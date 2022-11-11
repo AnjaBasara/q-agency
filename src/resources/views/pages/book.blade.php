@@ -14,7 +14,8 @@
             <div class="form-group row">
                 <label for="title" class="col-md-4 col-form-label text-md-right">Title:</label>
                 <div class="col-md-6">
-                    <input id="title" type="text" name="title" class="form-control" required autofocus>
+                    <input id="title" type="text" name="title" class="form-control" required autofocus
+                           value="{{ old('title') }}">
                 </div>
             </div>
 
@@ -24,8 +25,9 @@
                     <select id="author" name="author" class="custom-select" required>
                         <option selected disabled hidden value="">Select author</option>
                         @foreach($response['items'] as $author)
-                            <option
-                                value="{{ $author['id'] }}">{{ $author['first_name'] }} {{ $author['last_name'] }}</option>
+                            <option value="{{ $author['id'] }}" {{ old('author') == $author['id'] ? "selected" : "" }}>
+                                {{ $author['first_name'] }} {{ $author['last_name'] }}
+                            </option>
                         @endforeach
                         <option value="" id="loadMore" style="color: blue">Load more</option>
                     </select>
@@ -35,35 +37,39 @@
             <div class="form-group row">
                 <label for="releaseDate" class="col-md-4 col-form-label text-md-right">Release Date:</label>
                 <div class="col-md-6">
-                    <input id="releaseDate" type="text" name="releaseDate" class="form-control" required>
+                    <input id="releaseDate" type="text" name="releaseDate" class="form-control" required
+                           value="{{ old('releaseDate') }}">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="description" class="col-md-4 col-form-label text-md-right">Description:</label>
                 <div class="col-md-6">
-                    <textarea id="description" name="description" class="form-control" required></textarea>
+                    <textarea id="description" name="description" class="form-control"
+                              required>{{ old('description') }}</textarea>
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="isbn" class="col-md-4 col-form-label text-md-right">ISBN:</label>
                 <div class="col-md-6">
-                    <input id="isbn" type="text" name="isbn" class="form-control" required>
+                    <input id="isbn" type="text" name="isbn" class="form-control" required value="{{ old('isbn') }}">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="format" class="col-md-4 col-form-label text-md-right">Format:</label>
                 <div class="col-md-6">
-                    <input id="format" type="text" name="format" class="form-control" required>
+                    <input id="format" type="text" name="format" class="form-control" required
+                           value="{{ old('format') }}">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="numberOfPages" class="col-md-4 col-form-label text-md-right">Number of pages:</label>
                 <div class="col-md-6">
-                    <input id="numberOfPages" type="number" name="numberOfPages" class="form-control" required>
+                    <input id="numberOfPages" type="number" name="numberOfPages" class="form-control" required
+                           value="{{ old('numberOfPages') }}">
                 </div>
             </div>
 
