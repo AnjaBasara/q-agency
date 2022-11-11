@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property string title;
- * @property string releaseDate;
- * @property string description;
- * @property string isbn;
- * @property string format;
+ * @property string $title;
+ * @property string $releaseDate;
+ * @property string $description;
+ * @property string $isbn;
+ * @property string $format;
  * @property int $numberOfPages;
  * @property Author $author;
  */
